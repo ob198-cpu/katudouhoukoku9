@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生産活動報告 管理画面9</title>
+  <link rel="stylesheet" href="style.css?v=20260706-summary-chart-colors">
+</head>
+<body data-page="admin">
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Admin Console</p>
+      <h1>生産活動報告 管理画面9</h1>
+    </div>
+  </header>
+
+  <div id="storage-status" class="storage-status warn">保存先を確認中...</div>
+
+  <main class="admin-shell">
+    <section id="admin-lock" class="login-panel">
+      <div class="panel-head">
+        <div>
+          <h2>管理者ログイン</h2>
+          <p>管理者パスワードを入力してください。クラウド保存設定後はサーバー側で認証します。</p>
+        </div>
+      </div>
+      <form id="admin-login-form" class="login-form" autocomplete="off">
+        <label>
+          管理者パスワード
+          <input type="password" id="admin-pin" inputmode="numeric">
+        </label>
+        <button type="submit" class="primary-button">ログイン</button>
+        <div id="admin-login-message" class="form-message" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <section id="admin-console" class="admin-console hidden">
+      <div class="admin-tabs" aria-label="管理メニュー">
+        <button type="button" class="admin-tab active" data-admin-view="reports">データ管理</button>
+        <button type="button" class="admin-tab" data-admin-view="summary">集計</button>
+        <button type="button" class="admin-tab" data-admin-view="date-check">日付確認</button>
+        <button type="button" class="admin-tab" data-admin-view="settings">項目編集</button>
+      </div>
+
+      <section class="admin-view" data-admin-panel="summary">
+        <div class="toolbar-card">
+          <div class="period-row">
+            <button type="button" class="secondary-button" id="period-prev">前へ</button>
+            <button type="button" class="secondary-button" id="period-next">次へ</button>
+            <label>
+              集計単位
+              <select id="period-mode">
+                <option value="week">週</option>
+                <option value="month">月</option>
+              </select>
+            </label>
+            <label>
+              基準日
+              <input type="date" id="period-date">
+            </label>
+            <div id="period-label" class="period-label"></div>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-card"><span>報告件数</span><strong id="total-count">0件</strong></div>
+            <div class="kpi-card"><span>合計時間</span><strong id="total-time">0時間</strong></div>
+            <div class="kpi-card"><span>人数</span><strong id="staff-count">0名</strong></div>
+            <div class="kpi-card"><span>最多活動</span><strong id="top-activity">-</strong></div>
+          </div>
+        </div>
+
+        <div class="chart-grid">
+          <article class="card chart-card chart-card-overall">
+            <div class="card-head">
+              <h2>全体グラフ</h2>
+              <span>活動別</span>
+            </div>
+            <div id="overall-chart" class="bar-chart"></div>
+          </article>
+
+          <article class="card chart-card chart-card-staff">
+            <div class="card-head">
+              <h2>個別グラフ</h2>
+              <select id="staff-select" aria-label="職員を選択"></select>
+            </div>
+            <div id="staff-chart" class="bar-chart"></div>
+          </article>
+        </div>
+
+        <div class="table-grid">
+          <article class="card">
+            <div class="card-head">
+              <h2>活動別統計</h2>
+            </div>
+            <div id="activity-summary"></div>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <h2>個人別統計</h2>
+            </div>
+            <div id="staff-summary"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="admin-view active" data-admin-panel="reports">
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <p class="section-kicker">データ管理</p>
+              <h2>報告データの修正・削除・検索</h2>
+              <p class="muted">送信済みの報告を古い日付まで検索し、編集・削除できます。</p>
+            </div>
+            <div class="inline-actions">
+              <button type="button" class="danger-button" id="delete-all-reports">全削除</button>
+            </div>
+          </div>
+          <div class="management-note">
+            <strong>使い方: データ検索で対象を探し、表の右端「編集」「削除」から修正します。</strong>
+            <span>削除・編集前の内容は操作履歴に残り、必要な場合は履歴から復元できます。</span>
+          </div>
+          <div class="report-tools">
+            <label>
+              データ検索
+              <input type="search" id="report-search" placeholder="日付・氏名・活動・進捗で検索">
+            </label>
+            <label>
+              開始日
+              <input type="date" id="report-filter-start">
+            </label>
+            <label>
+              終了日
+              <input type="date" id="report-filter-end">
+            </label>
+            <button type="button" class="secondary-button" id="clear-report-filters">検索クリア</button>
+          </div>
+          <section id="report-edit-panel" class="edit-panel hidden" aria-labelledby="report-edit-title">
+            <div class="card-head compact-head">
+              <h3 id="report-edit-title">報告を編集</h3>
+              <button type="button" class="secondary-button small" id="cancel-report-edit">編集をキャンセル</button>
+            </div>
+            <form id="report-edit-form" autocomplete="off">
+              <input type="hidden" id="edit-report-id">
+              <div class="form-grid">
+                <label>投稿日<input type="date" id="edit-report-date" required></label>
+                <label>氏名<input type="text" id="edit-report-name" required></label>
+                <label>トータル時間（自動計算）<input type="text" id="edit-report-minutes-display" class="total-time-input" value="0分" readonly><input type="hidden" id="edit-report-minutes" value="0"></label>
+              </div>
+              <section class="field-block">
+                <div class="field-title">生産活動内容</div>
+                <div id="edit-activity-list" class="activity-grid"></div>
+              </section>
+              <label class="progress-field">
+                進捗状況
+                <textarea id="edit-report-progress" rows="5" required></textarea>
+              </label>
+              <div id="edit-report-message" class="form-message" role="status" aria-live="polite"></div>
+              <div class="form-actions">
+                <button type="submit" class="primary-button">編集内容を保存</button>
+              </div>
+            </form>
+          </section>
+          <div id="report-table"></div>
+          <details class="history-panel">
+            <summary>操作履歴</summary>
+            <div id="history-list"></div>
+          </details>
+        </article>
+      </section>
+
+      <section class="admin-view" data-admin-panel="date-check">
+        <div class="toolbar-card">
+          <div class="card-head compact-head">
+            <div>
+              <p class="section-kicker">日付確認</p>
+              <h2>投稿日と送信日の確認</h2>
+              <p class="muted">利用者が選んだ投稿日と、実際に送信された日を比較します。</p>
+            </div>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-card"><span>確認対象</span><strong id="date-check-total">0件</strong></div>
+            <div class="kpi-card"><span>日付一致</span><strong id="date-check-correct">0件</strong></div>
+            <div class="kpi-card"><span>要確認</span><strong id="date-check-mistakes">0件</strong></div>
+            <div class="kpi-card"><span>要確認率</span><strong id="date-check-rate">0%</strong></div>
+          </div>
+        </div>
+
+        <div class="table-grid date-check-grid">
+          <article class="card">
+            <div class="card-head">
+              <h2>利用者別要確認率</h2>
+            </div>
+            <div id="user-date-error-table"></div>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <h2>日付確認一覧</h2>
+            </div>
+            <div id="date-check-table"></div>
+          </article>
+        </div>
+      </section>
+      <section class="admin-view" data-admin-panel="settings">
+        <div class="settings-grid">
+          <article class="card">
+            <div class="card-head">
+              <h2>生産活動項目</h2>
+              <button type="button" class="secondary-button" id="add-activity">項目追加</button>
+            </div>
+            <div id="activity-editor" class="activity-editor"></div>
+
+            <div class="form-actions">
+              <button type="button" class="secondary-button" id="reset-activities">初期項目に戻す</button>
+              <button type="button" class="primary-button" id="save-activities">項目を保存</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <h2>管理者パスワード</h2>
+            </div>
+            <form id="pin-form" class="pin-form" autocomplete="off">
+              <label>
+                新しい管理者パスワード
+                <input type="password" id="new-pin" inputmode="numeric" minlength="4" required>
+              </label>
+              <button type="submit" class="primary-button">パスワードを変更</button>
+              <div id="pin-message" class="form-message" role="status" aria-live="polite"></div>
+            </form>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="config.js?v=20260706-soft-date-check"></script>
+  <script src="app.js?v=20260706-soft-date-check"></script>
+</body>
+</html>

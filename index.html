@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生産活動報告フォーム</title>
+  <link rel="stylesheet" href="style.css?v=20260706-summary-chart-colors">
+</head>
+<body data-page="form">
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Production Activity Report</p>
+      <h1>生産活動報告フォーム</h1>
+    </div>
+  </header>
+
+  <main class="form-shell">
+    <section class="form-panel" aria-labelledby="report-title">
+      <div class="panel-head">
+        <div>
+          <h2 id="report-title">毎日の生産活動報告</h2>
+          <p>何の仕事を何時間行ったか、進捗とあわせて記録します。</p>
+        </div>
+        <span class="required-note">* 必須</span>
+      </div>
+
+      <form id="report-form" autocomplete="off">
+        <div class="form-grid">
+          <label>
+            投稿日 <span class="required">*</span>
+            <input type="date" id="report-date" required>
+          </label>
+
+          <label>
+            氏名 <span class="required">*</span>
+            <input type="text" id="report-name" required>
+          </label>
+
+          <label>
+            トータル時間（自動計算） <span class="required">*</span>
+            <input type="text" id="report-minutes-display" class="total-time-input" value="0分" readonly>
+            <input type="hidden" id="report-minutes" value="0">
+          </label>
+        </div>
+
+        <section class="field-block">
+          <div class="field-title">生産活動内容（複数回答可能） <span class="required">*</span></div>
+          <div id="activity-list" class="activity-grid"></div>
+        </section>
+
+        <label class="progress-field">
+          進捗状況 <span class="required">*</span>
+          <textarea id="report-progress" rows="7" required></textarea>
+        </label>
+
+        <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
+
+        <div class="form-actions">
+          <button type="button" class="secondary-button" id="clear-form">入力をクリア</button>
+          <button type="submit" class="primary-button">報告を送信</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="config.js?v=20260706-soft-date-check"></script>
+  <script src="app.js?v=20260706-soft-date-check"></script>
+</body>
+</html>
