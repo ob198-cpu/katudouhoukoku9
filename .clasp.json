@@ -1,16 +1,18 @@
-{
-  "scriptId": "1dCF59TRAHIOJ_843Mc6JDwhE5EIjwUleiyt8_7_ehvaf_iivZZoJVRwV",
-  "rootDir": "backend",
-  "scriptExtensions": [
-    ".js",
-    ".gs"
-  ],
-  "htmlExtensions": [
-    ".html"
-  ],
-  "jsonExtensions": [
-    ".json"
-  ],
-  "filePushOrder": [],
-  "skipSubdirectories": false
+﻿{
+    "scriptId":  "14vR5b58jrUcV3lOhtqc-Pd75WPBId6pFaDlPXinF00VUD7FMc0MNEjas",
+    "rootDir":  "backend",
+    "scriptExtensions":  [
+                             ".js",
+                             ".gs"
+                         ],
+    "htmlExtensions":  [
+                           ".html"
+                       ],
+    "jsonExtensions":  [
+                           ".json"
+                       ],
+    "filePushOrder":  [
+
+                      ],
+    "skipSubdirectories":  false
 }

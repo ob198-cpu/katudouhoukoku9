@@ -1,9 +1,9 @@
-const SHEETS = {
+﻿const SHEETS = {
   reports: { name: 'Reports', type: 'reports', headers: ['投稿日', '氏名', '生産活動内容', '活動別時間', '合計時間(分)', '合計時間', '進捗状況', '選択投稿日', '実送信日', '日付正誤', '送信日時', '更新日時', 'id', 'json'] },
   activities: { name: 'Activities', headers: ['id', 'json', 'updatedAt'] },
   history: { name: 'History', headers: ['id', 'json', 'at'] }
 };
-const SPREADSHEET_ID = '1QMvmHhMYTp1-eJ_DEZn6wlUyBtCTe5C4h4rn1N9wZHQ';
+const SPREADSHEET_ID = '1j9K1cDVC_q7ZezfTJRwhQqZq_kqBKbj-MJzwNitGVPU';
 const ADMIN_HASH_KEY = 'ADMIN_PASSWORD_SHA256';
 const ADMIN_PASSWORD_MIN_LENGTH = 4;
 const HISTORY_LIMIT = 1000;
@@ -426,3 +426,4 @@ function dateKeyFromTimestamp_(value) {
 function json_(payload) {
   return ContentService.createTextOutput(JSON.stringify(payload)).setMimeType(ContentService.MimeType.JSON);
 }
+
