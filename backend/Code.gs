@@ -250,7 +250,7 @@ function deleteJson_(def, id) {
 }
 
 function targetSpreadsheet_() {
-  return SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(SPREADSHEET_ID);
+  return SpreadsheetApp.openById(SPREADSHEET_ID);
 }
 
 function readReports_() { return readJsonRows_(SHEETS.reports).map(normalizeReport_).filter(row => row.date && row.name); }
