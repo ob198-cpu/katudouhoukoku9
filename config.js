@@ -3,3 +3,5 @@ window.PRODUCTION_REPORT_API_URL = "https://script.google.com/macros/s/AKfycbwds
 
 
 
+
+window.PRODUCTION_REPORT_SYSTEM_KEY = "9";
