@@ -543,7 +543,7 @@ async function refreshCloudAdmin(password = adminPassword()) {
   }
   const data = await cloudRequest("adminSnapshot", {}, password);
   applySnapshot(data);
-  setStorageStatus("クラウド接続済み: 管理者操作はサーバー側パスワードで保護されています。", "ok");
+  setStorageStatus("クラウド接続済み: 管理者データを同期しました。", "ok");
   return true;
 }
 
@@ -1019,11 +1019,12 @@ function clearForm() {
 }
 
 function initAdminPage() {
-  const adminPinInput = $("#admin-pin");
-  if (adminPinInput) {
-    adminPinInput.value = "";
-    adminPinInput.addEventListener("focus", () => adminPinInput.removeAttribute("readonly"), { once: true });
-  }
+  ["#admin-pin", "#new-pin"].forEach(selector => {
+    const passwordInput = $(selector);
+    if (!passwordInput) return;
+    passwordInput.value = "";
+    passwordInput.addEventListener("focus", () => passwordInput.removeAttribute("readonly"), { once: true });
+  });
   if (sessionStorage.getItem(ADMIN_SESSION_KEY) === "1" && (!cloudEnabled() || adminPassword())) {
     unlockAdmin();
   } else {

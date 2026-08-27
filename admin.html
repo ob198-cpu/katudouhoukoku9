@@ -222,7 +222,7 @@
             <form id="pin-form" class="pin-form" autocomplete="off">
               <label>
                 新しい管理者パスワード
-                <input type="password" id="new-pin" inputmode="numeric" minlength="4" required>
+                <input type="password" id="new-pin" name="new-admin-access-code" inputmode="numeric" minlength="4" autocomplete="off" data-lpignore="true" readonly required>
               </label>
               <button type="submit" class="primary-button">パスワードを変更</button>
               <div id="pin-message" class="form-message" role="status" aria-live="polite"></div>
@@ -234,6 +234,6 @@
   </main>
 
   <script src="config.js?v=20260706-soft-date-check"></script>
-  <script src="app.js?v=20260827-admin-autofill-fix"></script>
+  <script src="app.js?v=20260827-product-audit-fix"></script>
 </body>
 </html>
