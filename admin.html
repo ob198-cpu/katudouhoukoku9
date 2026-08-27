@@ -27,7 +27,7 @@
       <form id="admin-login-form" class="login-form" autocomplete="off">
         <label>
           管理者パスワード
-          <input type="password" id="admin-pin" inputmode="numeric">
+          <input type="password" id="admin-pin" name="admin-access-code" inputmode="numeric" autocomplete="off" data-lpignore="true" readonly>
         </label>
         <button type="submit" class="primary-button">ログイン</button>
         <div id="admin-login-message" class="form-message" role="status" aria-live="polite"></div>
@@ -234,6 +234,6 @@
   </main>
 
   <script src="config.js?v=20260706-soft-date-check"></script>
-  <script src="app.js?v=20260827-connection-recovery"></script>
+  <script src="app.js?v=20260827-admin-autofill-fix"></script>
 </body>
 </html>

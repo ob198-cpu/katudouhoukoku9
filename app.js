@@ -1019,6 +1019,11 @@ function clearForm() {
 }
 
 function initAdminPage() {
+  const adminPinInput = $("#admin-pin");
+  if (adminPinInput) {
+    adminPinInput.value = "";
+    adminPinInput.addEventListener("focus", () => adminPinInput.removeAttribute("readonly"), { once: true });
+  }
   if (sessionStorage.getItem(ADMIN_SESSION_KEY) === "1" && (!cloudEnabled() || adminPassword())) {
     unlockAdmin();
   } else {
